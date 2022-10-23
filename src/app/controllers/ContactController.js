@@ -27,9 +27,15 @@ class ContactController {
 
   }
 
-  delete() {
+  async delete(request, response) {
     // Deletar um registro
-
+    const { id } = request.params;
+    const contact = await ContactRepository.findById(id);
+    if (!contact) {
+      return response.status(404).json({ error: 'contact not found' });
+    }
+    await ContactRepository.deleteContact(id);
+    return response.sendStatus(204);
   }
 }
 // Design Pattern SINGLETON
