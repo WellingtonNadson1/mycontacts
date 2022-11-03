@@ -17,9 +17,25 @@ class ContactController {
     return response.json(contact);
   }
 
-  strore() {
+  async strore(request, response) {
     // Criar um novo Registro
+    const {
+      name, email, fone,
+    } = request.body;
 
+    if (!name) {
+      return response.status(400).json({ error: 'Name is required' });
+    }
+
+    const contactExist = await ContactRepository.findByEmail(email);
+
+    if (contactExist) {
+      return response.status(400).json({ error: 'This e-amil is already been taken' });
+    }
+
+    const contact = await ContactRepository.createContact(name, email, fone);
+
+    return response.json(contact);
   }
 
   update() {

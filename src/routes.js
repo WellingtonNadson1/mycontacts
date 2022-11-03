@@ -3,6 +3,7 @@ import ContactController from './app/controllers/ContactController.js';
 
 const router = Router();
 router.get('/contacts', ContactController.index);
+router.post('/contacts', ContactController.strore);
 router.get('/contacts/:id', ContactController.show);
 router.delete('/contacts/:id', ContactController.delete);
 
